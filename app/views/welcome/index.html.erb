@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <title>Hello Protonshub!</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container">
+            <% if @recommended_seats.present? %>
+                <div class="alert alert-success" role="alert">
+                    Your recommended seats are: <%=@recommended_seats%>
+                    <form method="post" action="/welcome/book_seats">
+                        <td>
+                            <input type="hidden" value="<%=@movie.id%>" name="movie_id">
+                            <input type="hidden" value="<%=@recommended_seats%>" name="seats">
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary">Book Seats</button>
+                        </td>
+                    </form>
+                </div>
+            <% end %>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td><b>Title</b></td>
+                        <td><b>Summary</b></td>
+                        <td><b>Year</b></td>
+                        <td><b>Genre</b></td>
+                        <td><b>IMDB Link</b></td>
+                        <td><b>Number of Seats</b></td>
+                        <td><b>Find Seat</b></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @movies.each do |movie| %>
+                        <tr>
+                            <td><%= movie.movie_name%></td>
+                            <td><%= movie.summary%></td>
+                            <td><%= movie.year%></td>
+                            <td><%= movie.genre%></td>
+                            <td><%= movie.imdb%></td>
+                            <%= form_for :form, :url => welcome_get_seats_path, :method => :get do |email| %>
+                                <td>
+                                    <%= email.number_field :numseats, class: "form-control", placeholder: "Number of Seats"  %>
+                                    <%= email.hidden_field :movie_id, value: movie.id %>
+                                </td>
+                                <td>
+                                    <%= email.submit "Find Seats",class: "btn btn-primary" %>
+                                </td>
+                              <% end %>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+
+        <%= link_to 'Movies', movies_path %> |
+        <%= link_to 'Venues', venues_path %>
+    </body>
+</html>
