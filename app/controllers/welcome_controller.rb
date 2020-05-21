@@ -12,7 +12,7 @@ class WelcomeController < ApplicationController
   end
 
   def book_seats
-    @seats = params[:seats].split(",").join("").split(",")
+    @seats = params[:seats].split(',')
     Seat.where(movie_id: @movie.id, seat_combination: @seats).update_all(status: "BOOKED")
   end
 
