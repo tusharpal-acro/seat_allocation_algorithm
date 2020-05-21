@@ -49,3 +49,10 @@ you can book the seats using book seats option
 The links are given on home page for creating movies and venues
 
 After creating a movie you can view the seats by clicking on seats option in front of movie list
+
+
+##App URL
+
+```
+https://seating-algo.herokuapp.com/
+```
